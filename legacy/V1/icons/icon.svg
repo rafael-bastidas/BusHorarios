@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Definitions for gradients and shadows -->
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5B942" />
+      <stop offset="100%" stop-color="#D59322" />
+    </linearGradient>
+    
+    <!-- Bus Body Gradient -->
+    <linearGradient id="busGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A1B20" />
+      <stop offset="100%" stop-color="#0D0E11" />
+    </linearGradient>
+
+    <!-- Glass Glow Gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#E0E8FF" stop-opacity="0.5" />
+    </linearGradient>
+    
+    <!-- Shadow Filter -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+
+  <!-- Inner border light effect -->
+  <rect x="10" y="10" width="492" height="492" rx="100" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-opacity="0.3" />
+
+  <!-- Bus Group with Shadow -->
+  <g filter="url(#dropShadow)">
+    <!-- Main Bus Chassis -->
+    <rect x="110" y="130" width="292" height="250" rx="30" fill="url(#busGrad)" />
+    
+    <!-- Left Mirror -->
+    <path d="M110 180 H 90 C 80 180, 80 210, 90 210 H 110 Z" fill="#0D0E11" />
+    <!-- Right Mirror -->
+    <path d="M402 180 H 422 C 432 180, 432 210, 422 210 H 402 Z" fill="#0D0E11" />
+
+    <!-- Upper Window (Windshield) -->
+    <rect x="130" y="155" width="252" height="90" rx="12" fill="url(#glassGrad)" />
+    <!-- Windshield Center Divider -->
+    <rect x="251" y="155" width="10" height="90" fill="#0D0E11" />
+
+    <!-- Headlights -->
+    <circle cx="155" cy="325" r="16" fill="#FFFBE6" />
+    <circle cx="155" cy="325" r="12" fill="#FFD700" />
+    <circle cx="155" cy="325" r="6" fill="#FFFFFF" />
+    
+    <circle cx="357" cy="325" r="16" fill="#FFFBE6" />
+    <circle cx="357" cy="325" r="12" fill="#FFD700" />
+    <circle cx="357" cy="325" r="6" fill="#FFFFFF" />
+
+    <!-- Front Grill -->
+    <rect x="195" y="300" width="122" height="35" rx="8" fill="#141518" stroke="#33353A" stroke-width="2" />
+    <line x1="205" y1="309" x2="307" y2="309" stroke="#E5A93B" stroke-width="3" stroke-linecap="round" />
+    <line x1="205" y1="318" x2="307" y2="318" stroke="#E5A93B" stroke-width="3" stroke-linecap="round" />
+    <line x1="205" y1="327" x2="307" y2="327" stroke="#E5A93B" stroke-width="3" stroke-linecap="round" />
+
+    <!-- License Plate -->
+    <rect x="226" y="348" width="60" height="18" rx="3" fill="#FFFFFF" />
+    <text x="256" y="362" font-family="monospace" font-size="11" font-weight="bold" fill="#111" text-anchor="middle">BUS-T14</text>
+
+    <!-- Wheels / Bottom Clearance -->
+    <rect x="135" y="375" width="50" height="20" rx="6" fill="#050506" />
+    <rect x="327" y="375" width="50" height="20" rx="6" fill="#050506" />
+  </g>
+</svg>

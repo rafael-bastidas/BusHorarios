@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+  <title>Horarios Autobús T14 - Campo de Borja y Moncayo</title>
+  
+  <!-- SEO & PWA Meta Tags -->
+  <meta name="description" content="Consulta los horarios de autobús de la línea T14 en sentido Zaragoza y viceversa sin conexión a internet.">
+  <meta name="theme-color" content="#E5A93B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bus T14">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/x-icon" href="./icons/icon.svg">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-title">
+      <!-- Bus SVG Icon in header -->
+      <svg class="header-logo" viewBox="0 0 512 512" fill="#E5A93B">
+        <path d="M424 160V140c0-16.5-13.5-30-30-30H118c-16.5 0-30 13.5-30 30v20c-16.5 0-30 13.5-30 30v150c0 16.5 13.5 30 30 30h20v20c0 16.5 13.5 30 30 30h20c16.5 0 30-13.5 30-30v-20h136v20c0 16.5 13.5 30 30 30h20c16.5 0 30-13.5 30-30v-20h20c16.5 0 30-13.5 30-30V190c0-16.5-13.5-30-30-30zM138 350c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20zm236 0c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20zm20-130H118v-70h276v70z"/>
+      </svg>
+      <h1>Bus T14 Aragón</h1>
+    </div>
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambiar Tema">☀️</button>
+  </header>
+
+  <!-- Main scrollable content -->
+  <main>
+    
+    <!-- PANTALLA 1: DASHBOARD (PRÓXIMO BUS) -->
+    <section id="next-bus-screen" class="screen active">
+      <!-- Selector de Parada -->
+      <div id="stopSelectorTrigger" class="stop-selector-trigger">
+        <div class="stop-selector-info">
+          <span class="stop-label">Consultando salida desde:</span>
+          <span id="currentStopLabel" class="stop-value">Cargando parada...</span>
+        </div>
+        <div class="stop-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 8 8 12 12 16"></polyline>
+            <line x1="16" y1="12" x2="8" y2="12"></line>
+          </svg>
+        </div>
+      </div>
+
+      <div class="direction-title">Próximos Servicios hoy</div>
+      
+      <!-- Contenedor del Dashboard -->
+      <div id="nextBusDashboard" class="next-bus-dashboard-container">
+        <!-- Renderizado dinámicamente -->
+      </div>
+    </section>
+
+    <!-- PANTALLA 2: POR HORA (A PARTIR DE HORA SELECCIONADA) -->
+    <section id="by-time-screen" class="screen">
+      <!-- Time selector -->
+      <div class="time-search-bar">
+        <label for="timeSearchInput">Salidas a partir de:</label>
+        <input type="time" id="timeSearchInput" class="time-input">
+      </div>
+
+      <div class="direction-title">Siguientes 5 Salidas</div>
+      
+      <div id="timeSearchResults" class="bus-list-horizontal">
+        <!-- Renderizado dinámicamente -->
+      </div>
+    </section>
+
+    <!-- PANTALLA 3: EXPLORADOR DE HORARIOS COMPLETOS -->
+    <section id="explorer-screen" class="screen">
+      <div class="explorer-filters">
+        
+        <!-- Day Select -->
+        <div class="dropdown-container">
+          <span class="dropdown-label">Tipo de Día</span>
+          <select id="explorerDaySelect" class="custom-select">
+            <option value="LMXJV">Lunes a Viernes laborables</option>
+            <option value="S">Sábados laborables</option>
+            <option value="DF">Domingos y Festivos</option>
+          </select>
+        </div>
+
+        <!-- Starting Time Filter -->
+        <div class="dropdown-container">
+          <span class="dropdown-label">A partir de las (Opcional)</span>
+          <input type="time" id="explorerTimeInput" class="custom-select" style="padding: 12px 16px;">
+        </div>
+
+        <!-- Route Filter -->
+        <div class="dropdown-container">
+          <span class="dropdown-label">Línea</span>
+          <select id="explorerRouteSelect" class="custom-select">
+            <!-- Rellenado dinámicamente -->
+          </select>
+        </div>
+
+        <!-- Direction Filter -->
+        <div class="dropdown-container">
+          <span class="dropdown-label">Sentido</span>
+          <select id="explorerDirectionSelect" class="custom-select">
+            <option value="all">Ida y Vuelta (Todos)</option>
+            <option value="to">Solo Ida (Hacia Zaragoza / Terminal)</option>
+            <option value="from">Solo Vuelta (Desde Zaragoza / Origen)</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="direction-title">Resultados de Horarios</div>
+
+      <!-- Tabla de Horarios -->
+      <div class="table-wrapper">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th style="width: 75px;">Hora</th>
+              <th>Parada</th>
+              <th>Destino</th>
+              <th style="width: 90px;">Línea</th>
+              <th style="width: 80px;">Días</th>
+            </tr>
+          </thead>
+          <tbody id="explorerResultsTable">
+            <!-- Rellenado dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM SHEET DE SELECCIÓN DE PARADA (Mobile Search Overlay) -->
+  <div id="stopSelectionSheet" class="bottom-sheet">
+    <div id="sheetBackdrop" class="bottom-sheet-backdrop"></div>
+    <div class="bottom-sheet-content">
+      <div class="bottom-sheet-handle"></div>
+      
+      <div class="bottom-sheet-header">
+        <span class="bottom-sheet-title">Buscar Parada</span>
+        <button id="sheetClose" class="bottom-sheet-close">Cerrar</button>
+      </div>
+
+      <!-- Search Box inside Sheet -->
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="stopSearchInput" class="search-input" placeholder="Escribe el nombre de la parada...">
+      </div>
+
+      <!-- Scrollable list of stops -->
+      <div id="stopsListContainer" class="stops-list-container">
+        <!-- Generado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" data-tab="next-bus">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+      </svg>
+      <span>Próximo Bus</span>
+    </button>
+    <button class="tab-btn" data-tab="by-time">
+      <svg viewBox="0 0 24 24">
+        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+      </svg>
+      <span>Por Hora</span>
+    </button>
+    <button class="tab-btn" data-tab="explorer">
+      <svg viewBox="0 0 24 24">
+        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+      </svg>
+      <span>Horarios</span>
+    </button>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="./schedule-data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

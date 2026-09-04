@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Bus T14 Aragón</string>
+    <string name="title_activity_main">Bus T14 Aragón</string>
+    <string name="package_name">com.t14bus.aragon</string>
+    <string name="custom_url_scheme">com.t14bus.aragon</string>
+</resources>

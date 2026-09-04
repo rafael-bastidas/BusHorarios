@@ -1,0 +1,30 @@
+{
+  "name": "Horarios Bus T14 - Campo de Borja y Moncayo",
+  "short_name": "Bus T14",
+  "description": "Consulta offline de los horarios de autobús de la línea T14 (Tarazona, Borja, Novillas, Tabuenca con Zaragoza).",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121214",
+  "theme_color": "#E5A93B",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

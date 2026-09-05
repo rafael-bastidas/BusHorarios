@@ -5,15 +5,6 @@ node_modules/
 dist/
 build/
 
-# Android
-android/.gradle/
-android/build/
-android/app/build/
-android/local.properties
-android/.idea/
-*.apk
-*.aab
-
 # Environment variables
 .env
 .env*.local

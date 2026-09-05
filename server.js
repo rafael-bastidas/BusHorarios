@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 8080;
-const PUBLIC_DIR = path.join(__dirname, 'www');
+const PUBLIC_DIR = __dirname;
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -59,10 +59,27 @@ const server = http.createServer((req, res) => {
   }
 
   // Handle standard static file serving
-  let filePath = path.join(PUBLIC_DIR, req.url === '/' ? 'index.html' : req.url);
+  const reqUrl = req.url.split('?')[0];
+  let filePath = path.join(PUBLIC_DIR, reqUrl === '/' ? 'index.html' : reqUrl);
   
   // Prevent directory traversal
   if (!filePath.startsWith(PUBLIC_DIR)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain' });
+    res.end('Forbidden');
+    return;
+  }
+
+  // Prevent serving sensitive files (git, node_modules, config, scripts)
+  const relPath = path.relative(PUBLIC_DIR, filePath).replace(/\\/g, '/');
+  if (
+    relPath.startsWith('.git') ||
+    relPath.startsWith('node_modules') ||
+    relPath === 'package.json' ||
+    relPath === 'package-lock.json' ||
+    relPath === 'server.js' ||
+    relPath === 'generate_assets.py' ||
+    relPath.endsWith('.md')
+  ) {
     res.writeHead(403, { 'Content-Type': 'text/plain' });
     res.end('Forbidden');
     return;

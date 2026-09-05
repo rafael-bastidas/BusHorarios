@@ -79,7 +79,7 @@ def create_bus_icon(size, filename):
 
 if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    icons_dir = os.path.join(base_dir, "www", "icons")
+    icons_dir = os.path.join(base_dir, "icons")
     create_bus_icon(192, os.path.join(icons_dir, "icon-192.png"))
     create_bus_icon(512, os.path.join(icons_dir, "icon-512.png"))
     print("Done generating assets!")

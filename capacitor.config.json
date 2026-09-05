@@ -1,8 +1,0 @@
-{
-  "appId": "com.t14bus.aragon",
-  "appName": "Bus T14 Aragón",
-  "webDir": "www",
-  "server": {
-    "androidScheme": "https"
-  }
-}
